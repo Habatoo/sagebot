@@ -6,6 +6,6 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 class TestController {
-    @GetMapping("/{name}")
-    fun get(@PathVariable name: String) = "Hello, $name"
+    @GetMapping("/")
+    fun get() = "Hello"
 }
