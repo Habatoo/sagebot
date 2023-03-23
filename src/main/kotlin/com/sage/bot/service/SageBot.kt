@@ -28,8 +28,10 @@ class SageBot(
             val message = update.message
             val chatId = message.chatId
             val responseText = if (message.hasText()) {
-                when (val messageText = message.text) {
-                    "/start" -> "Добро пожаловать!"
+                val messageText = message.text
+                when {
+                    messageText == "/start" -> "Добро пожаловать!"
+                    messageText.startsWith("Кнопка ") -> "Вы нажали кнопку"
                     else -> "Вы написали: *$messageText*"
                 }
             } else {
