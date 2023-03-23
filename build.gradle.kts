@@ -20,6 +20,8 @@ dependencies {
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.telegram:telegrambots:6.5.0")
+	implementation("org.telegram:telegrambots-spring-boot-starter:6.5.0")
+	implementation("org.telegram:telegrambotsextensions:6.5.0")
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
