@@ -1,6 +1,6 @@
 telegram:
   api-url: https://api.telegram.org/
   webhook-path: https://talksagebot.herokuapp.com/
-  bot-name: "@TalkSageBot"
-  bot-token: ""
+  bot-name: ${BOT_NAME}
+  bot-token: ${BOT_TOKEN}
 

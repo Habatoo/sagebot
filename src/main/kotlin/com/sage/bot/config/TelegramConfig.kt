@@ -1,8 +1,8 @@
 package com.sage.bot.config
 
-import org.springframework.context.annotation.Configuration
+import org.springframework.boot.context.properties.ConfigurationProperties
 
-@Configuration("telegram")
+@ConfigurationProperties("telegram")
 class TelegramConfig {
     lateinit var webhookPath: String
     lateinit var botName: String
