@@ -29,7 +29,7 @@ class SageBot(
             val chatId = message.chatId
             val responseText = if (message.hasText()) {
                 when (val messageText = message.text) {
-                    "/start" -> "Добро пожаловать"
+                    "/start" -> "Добро пожаловать\\!"
                     else -> "Вы написали: *$messageText*"
                 }
             } else {
