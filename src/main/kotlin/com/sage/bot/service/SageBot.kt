@@ -7,22 +7,23 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 import org.telegram.telegrambots.meta.api.objects.Update
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow
+import org.telegram.telegrambots.meta.generics.LongPollingBot
 
 @Service
 class SageBot(
-    telegramConfig: TelegramConfig,
+    private val telegramConfig: TelegramConfig,
 ) : TelegramLongPollingBot() {
 
-    private val webhookPath = telegramConfig.webhookPath
-    private val botName = telegramConfig.botName
-    private val botToken = telegramConfig.botToken
-
     override fun getBotUsername(): String {
-        return botName
+        return telegramConfig.botName
     }
 
     override fun getBotToken(): String {
-        return botToken
+        return telegramConfig.botToken
+    }
+
+    fun getWebhookPath(): String {
+        return telegramConfig.webhookPath
     }
 
     override fun onUpdateReceived(update: Update) {
@@ -30,8 +31,11 @@ class SageBot(
             val message = update.message
             val chatId = message.chatId
             val responseText = if (message.hasText()) {
-                when (val messageText = message.text) {
-                    "/start" -> "Добро пожаловать\\!"
+                val messageText = message.text
+                when {
+                    messageText == "/start" -> "Добро пожаловать\\!"
+                    messageText == "/ask" -> "Спросить у бота"
+                    messageText.startsWith("Кнопка") -> "Добро пожаловать\\!"
                     else -> "Вы написали: *$messageText*"
                 }
             } else {
@@ -47,7 +51,6 @@ class SageBot(
         responseMessage.replyMarkup = getReplyMarkup(
             listOf(
                 listOf("Кнопка 1", "Кнопка 2"),
-                listOf("Кнопка 3", "Кнопка 4")
             )
         )
         execute(responseMessage)
