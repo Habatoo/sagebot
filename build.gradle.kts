@@ -23,7 +23,9 @@ dependencies {
 	implementation("org.telegram:telegrambots-spring-boot-starter:6.5.0")
 	implementation("org.telegram:telegrambotsextensions:6.5.0")
 
-	testImplementation("org.springframework.boot:spring-boot-starter-test")
+	testImplementation("io.kotest:kotest-runner-junit5-jvm:5.5.4")
+	testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
+	testImplementation("io.mockk:mockk:1.13.2")
 }
 
 tasks.withType<KotlinCompile> {
