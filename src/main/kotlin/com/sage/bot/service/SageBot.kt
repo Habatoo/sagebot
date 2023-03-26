@@ -5,6 +5,7 @@ import com.sage.bot.service.command.AskCommand
 import com.sage.bot.service.command.HelpCommand
 import com.sage.bot.service.command.StartCommand
 import com.sage.bot.util.Utils
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import org.telegram.telegrambots.extensions.bots.commandbot.TelegramLongPollingCommandBot
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage
@@ -16,12 +17,14 @@ class SageBot(
     private val telegramConfig: TelegramConfig,
 ) : TelegramLongPollingCommandBot() {
 
-    var nonCommand: NonCommand = NonCommand()
+    private val log = LoggerFactory.getLogger(SageBot::class.java)
+    private var nonCommand: NonCommand = NonCommand()
 
     init {
         register(StartCommand("start", "Старт"))
         register(AskCommand("ask", "Спросить"))
         register(HelpCommand("help", "Помощь"))
+        log.info("Start successful")
     }
 
     override fun getBotUsername(): String {
@@ -44,7 +47,7 @@ class SageBot(
             val responseText = if (message.hasText()) {
                 nonCommand.nonCommandExecute(chatId, userName, message.text)
             } else {
-                "Только текст"
+                "Поддерживается только текст"
             }
             sendNotification(chatId, responseText)
         }
@@ -61,6 +64,7 @@ class SageBot(
         try {
             execute(responseMessage)
         } catch (e: TelegramApiException) {
+            log.error("sendNotification error ${e.message}")
             e.printStackTrace()
         }
     }
