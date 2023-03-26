@@ -7,5 +7,4 @@ COPY build.gradle.kts .
 
 COPY src src
 
-RUN ./gradlew build -x test
-CMD ["./gradlew bootRun"]
+CMD ["./gradlew -x test", "./gradlew bootRun"]
