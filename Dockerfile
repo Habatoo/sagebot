@@ -3,7 +3,7 @@ WORKDIR /sagebot
 
 COPY gradlew .
 COPY gradle gradle
-COPY build.gradle .
+COPY build.gradle.kts .
 RUN ./gradlew dependencies
 
 COPY src src
