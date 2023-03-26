@@ -1,68 +1,68 @@
 package com.sage.bot.service
 
 import com.sage.bot.config.TelegramConfig
-import org.springframework.stereotype.Service
-import org.telegram.telegrambots.bots.TelegramLongPollingBot
+import com.sage.bot.service.command.AskCommand
+import com.sage.bot.service.command.HelpCommand
+import com.sage.bot.service.command.StartCommand
+import com.sage.bot.util.Utils
+import org.springframework.stereotype.Component
+import org.telegram.telegrambots.extensions.bots.commandbot.TelegramLongPollingCommandBot
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 import org.telegram.telegrambots.meta.api.objects.Update
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow
-import org.telegram.telegrambots.meta.generics.LongPollingBot
+import org.telegram.telegrambots.meta.exceptions.TelegramApiException
 
-@Service
+@Component
 class SageBot(
     private val telegramConfig: TelegramConfig,
-) : TelegramLongPollingBot() {
+) : TelegramLongPollingCommandBot() {
+
+    var nonCommand: NonCommand = NonCommand()
+
+    init {
+        register(StartCommand("start", "Старт"))
+        register(AskCommand("ask", "Спросить"))
+        register(HelpCommand("help", "Помощь"))
+    }
 
     override fun getBotUsername(): String {
         return telegramConfig.botName
     }
 
+    @Deprecated("getBotToken - deprecated")
     override fun getBotToken(): String {
         return telegramConfig.botToken
     }
 
-    fun getWebhookPath(): String {
-        return telegramConfig.webhookPath
-    }
-
-    override fun onUpdateReceived(update: Update) {
+    /**
+     * Ответ на запрос, не являющийся командой
+     */
+    override fun processNonCommandUpdate(update: Update) {
         if (update.hasMessage()) {
             val message = update.message
             val chatId = message.chatId
+            val userName = Utils.getUserName(message)
             val responseText = if (message.hasText()) {
-                val messageText = message.text
-                when {
-                    messageText == "/start" -> "Добро пожаловать\\!"
-                    messageText == "/ask" -> "Спросить у бота"
-                    messageText.startsWith("Кнопка") -> "Добро пожаловать\\!"
-                    else -> "Вы написали: *$messageText*"
-                }
+                nonCommand.nonCommandExecute(chatId, userName, message.text)
             } else {
-                "Я понимаю только текст"
+                "Только текст"
             }
             sendNotification(chatId, responseText)
         }
     }
 
+    /**
+     * Отправка ответа
+     * @param chatId id чата
+     * @param responseText текст ответа
+     */
     private fun sendNotification(chatId: Long, responseText: String) {
         val responseMessage = SendMessage(chatId.toString(), responseText)
         responseMessage.enableMarkdown(true)
-        responseMessage.replyMarkup = getReplyMarkup(
-            listOf(
-                listOf("Кнопка 1", "Кнопка 2"),
-            )
-        )
-        execute(responseMessage)
+        try {
+            execute(responseMessage)
+        } catch (e: TelegramApiException) {
+            e.printStackTrace()
+        }
     }
 
-    private fun getReplyMarkup(allButtons: List<List<String>>): ReplyKeyboardMarkup {
-        val markup = ReplyKeyboardMarkup()
-        markup.keyboard = allButtons.map { rowButtons ->
-            val row = KeyboardRow()
-            rowButtons.forEach { rowButton -> row.add(rowButton) }
-            row
-        }
-        return markup
-    }
 }
