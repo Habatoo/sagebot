@@ -22,6 +22,7 @@ dependencies {
 	implementation("org.telegram:telegrambots:6.5.0")
 	implementation("org.telegram:telegrambots-spring-boot-starter:6.5.0")
 	implementation("org.telegram:telegrambotsextensions:6.5.0")
+	implementation("com.vdurmont:emoji-java:5.1.1")
 
 	testImplementation("io.kotest:kotest-runner-junit5-jvm:5.5.4")
 	testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
