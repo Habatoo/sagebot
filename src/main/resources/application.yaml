@@ -1,3 +1,6 @@
+server:
+  port : 5000
+
 telegram:
   api-url: https://api.telegram.org/
   webhook-path: https://talksagebot.herokuapp.com/

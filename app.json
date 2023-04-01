@@ -1,5 +1,0 @@
-{
-  "name": "Bot on Heroku: Kotlin",
-  "description": "Chat bot deployed to Heroku.",
-  "addons":[]
-}
