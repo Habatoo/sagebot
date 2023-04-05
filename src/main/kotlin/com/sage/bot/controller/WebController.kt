@@ -1,6 +1,6 @@
 package com.sage.bot.controller
 
-import com.sage.bot.service.SageBot
+import com.sage.bot.api.SageBot
 import org.slf4j.LoggerFactory
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
