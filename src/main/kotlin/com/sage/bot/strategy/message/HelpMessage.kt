@@ -17,6 +17,6 @@ class HelpMessage(
     }
 
     override fun getMessage(chatId: Long): String {
-        return messageWriter.process(StepCode.HELP, HelpDto())
+        return messageWriter.process(StepCode.HELP)
     }
 }

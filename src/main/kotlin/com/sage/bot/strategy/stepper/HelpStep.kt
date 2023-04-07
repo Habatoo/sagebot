@@ -11,7 +11,7 @@ class HelpStep : ChooseNextStep {
     }
 
     override fun getNextStep(chatId: Long): StepCode {
-        return StepCode.HELP
+        return StepCode.ASK
     }
 
 }

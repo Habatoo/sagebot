@@ -17,6 +17,7 @@ class AskMessage(
     }
 
     override fun getMessage(chatId: Long): String {
-        return messageWriter.process(StepCode.ASK, AskDto(chatId, null, null))
+        val user = userService.getUser(chatId)
+        return messageWriter.process(StepCode.ASK, AskDto(chatId, user.get().text))
     }
 }

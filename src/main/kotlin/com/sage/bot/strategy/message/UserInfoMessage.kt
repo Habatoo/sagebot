@@ -17,6 +17,16 @@ class UserInfoMessage(
     }
 
     override fun getMessage(chatId: Long): String {
-        return messageWriter.process(StepCode.USER_INFO, UserInfoDto(chatId))
+        val user = userService.getUser(chatId)
+        return messageWriter.process(
+            StepCode.USER_INFO,
+            UserInfoDto(
+                chatId = chatId,
+                userName = user.get().userName,
+                firstName = user.get().firstName,
+                lastName = user.get().lastName,
+                registerAt = user.get().registerAt,
+            )
+        )
     }
 }

@@ -5,6 +5,7 @@ import com.sage.bot.repository.UsersRepository
 import com.sage.bot.repository.entity.UserEntity
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
+import org.telegram.telegrambots.meta.api.objects.User
 import java.time.Instant
 import java.util.Optional
 
@@ -18,15 +19,19 @@ class UserService(
         return usersRepository.existsById(chatId)
     }
 
-    fun createUser(chatId: Long): UserEntity {
+    fun createUser(chatId: Long, user: User): UserEntity {
         val userEntity = UserEntity(
             id = chatId,
+            userName = user.userName,
+            firstName = user.firstName,
+            lastName = user.lastName,
+            registerAt = Instant.now(),
             stepCode = StepCode.START.toString(),
             text = null,
             accept = null,
-            registerAt = Instant.now()
         )
-        usersRepository.save(userEntity)
+        usersRepository.saveAndFlush(userEntity)
+        log.info("save user ${usersRepository.findById(chatId)}")
         return userEntity
     }
 

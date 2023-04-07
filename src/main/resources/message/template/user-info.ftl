@@ -1,3 +1,2 @@
 Your chatId is ${data.chatId}.
-
-Please, write me some text
+Your userName is ${data}.
