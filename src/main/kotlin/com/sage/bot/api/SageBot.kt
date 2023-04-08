@@ -22,9 +22,10 @@ class SageBot(
     @PostConstruct
     private fun initCommands() {
         botCommands.forEach {
-            log.info("Init $it")
             register(it)
         }
+
+        log.info("Инициализация завершена успешно")
 
         registerDefaultAction { absSender, message ->
 

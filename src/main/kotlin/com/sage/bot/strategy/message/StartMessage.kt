@@ -33,7 +33,7 @@ class StartMessage(
             StepCode.START,
             StartDto(
                 chatId = user.get().id,
-                userName = Utils.getUserName(user.get()),
+                userName = Utils.getUserNameWithSmile(user.get()),
             )
         )
     }

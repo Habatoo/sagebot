@@ -11,7 +11,8 @@ class FewTextChooser(
 ) : MessageChooser {
 
     override fun isAvailableForCurrentStep(chatId: Long): Boolean {
-        return userService.getUser(chatId).get().stepCode == StepCode.USER_INFO.toString()
+        return userService.getUser(chatId).get().stepCode == StepCode.CLEAN_MY_INFO.toString() ||
+                userService.getUser(chatId).get().stepCode == StepCode.BUTTON_RESPONSE.toString()
     }
 
     override fun isPermitted(chatId: Long): Boolean {

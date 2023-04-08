@@ -1,6 +1,7 @@
 package com.sage.bot.util
 
 import com.sage.bot.repository.entity.UserEntity
+import com.vdurmont.emoji.EmojiParser
 import org.telegram.telegrambots.meta.api.objects.Message
 import org.telegram.telegrambots.meta.api.objects.User
 import java.time.Instant
@@ -36,5 +37,6 @@ object Utils {
     fun getUserName(user: User) = user.userName ?: "${user.lastName} ${user.firstName}"
 
     fun getUserName(user: UserEntity) = user.userName ?: "${user.lastName} ${user.firstName}"
+    fun getUserNameWithSmile(user: UserEntity): String = EmojiParser.parseToUnicode("${getUserName(user)} :blush:")
 
 }

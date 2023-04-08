@@ -27,16 +27,9 @@ class CleanMyInfoCommand(
     override fun execute(absSender: AbsSender, user: User, chat: Chat, arguments: Array<out String>) {
         val chatId = chat.id
 
-        if (userService.isUserExist(chatId)) {
-            userService.updateUserStep(chatId, CLEAN_MY_INFO)
-            userService.delete(chatId)
-        } else {
-            log.info("Not found user for id $chatId")
-        }
-
         userService.updateUserStep(chatId, CLEAN_MY_INFO)
         applicationEventPublisher.publishEvent(
-            TelegramStepMessageEvent(chatId = chatId, stepCode = CLEAN_MY_INFO)
+            TelegramStepMessageEvent(chatId = chatId, stepCode = StepCode.BUTTON_REQUEST)
         )
     }
 

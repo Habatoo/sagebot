@@ -86,8 +86,8 @@ class UserService(
         val userEntityOptional = usersRepository.findById(chatId)
         if (userEntityOptional.isPresent) {
             log.info("Delete user with id $chatId.")
-            // val userEntity = userEntityOptional.get()
-            // usersRepository.delete(userEntity)
+            val userEntity = userEntityOptional.get()
+            usersRepository.delete(userEntity)
         } else {
             log.error("For $chatId there is no user.")
         }
