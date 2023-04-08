@@ -2,6 +2,7 @@ package com.sage.bot.api
 
 import com.sage.bot.properties.BotProperty
 import com.sage.bot.service.ReceiverService
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import org.telegram.telegrambots.extensions.bots.commandbot.TelegramLongPollingCommandBot
 import org.telegram.telegrambots.extensions.bots.commandbot.commands.IBotCommand
@@ -16,9 +17,12 @@ class SageBot(
     private val receiverService: ReceiverService
 ) : TelegramLongPollingCommandBot() {
 
+    private val log = LoggerFactory.getLogger(SageBot::class.java)
+
     @PostConstruct
-    fun initCommands() {
+    private fun initCommands() {
         botCommands.forEach {
+            log.info("Init $it")
             register(it)
         }
 

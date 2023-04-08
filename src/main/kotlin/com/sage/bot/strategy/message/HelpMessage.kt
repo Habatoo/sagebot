@@ -1,7 +1,6 @@
 package com.sage.bot.strategy.message
 
 import com.sage.bot.component.MessageWriter
-import com.sage.bot.dto.HelpDto
 import com.sage.bot.enums.StepCode
 import com.sage.bot.service.UserService
 import org.springframework.stereotype.Component

@@ -9,15 +9,15 @@ import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 
 @Component
-class StartMessage(
+class CleanMyDataMessage(
     private val userService: UserService,
     private val messageWriter: MessageWriter,
 ) : Message {
 
-    private val log = LoggerFactory.getLogger(StartMessage::class.java)
+    private val log = LoggerFactory.getLogger(CleanMyDataMessage::class.java)
 
     override fun isAvailableForCurrentStep(chatId: Long): Boolean {
-        return userService.getUser(chatId).get().stepCode == StepCode.START.toString()
+        return userService.getUser(chatId).get().stepCode == StepCode.CLEAN_MY_INFO.toString()
     }
 
     override fun getMessage(chatId: Long): String {
@@ -30,7 +30,7 @@ class StartMessage(
         }
 
         return messageWriter.process(
-            StepCode.START,
+            StepCode.CLEAN_MY_INFO,
             StartDto(
                 chatId = user.get().id,
                 userName = Utils.getUserName(user.get()),

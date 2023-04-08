@@ -1,1 +1,1 @@
-Hello!
+Приветствую ${data.userName}!

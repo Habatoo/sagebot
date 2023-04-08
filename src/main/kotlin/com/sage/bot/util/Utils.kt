@@ -1,9 +1,25 @@
 package com.sage.bot.util
 
+import com.sage.bot.repository.entity.UserEntity
 import org.telegram.telegrambots.meta.api.objects.Message
 import org.telegram.telegrambots.meta.api.objects.User
+import java.time.Instant
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 
 object Utils {
+
+    private val zone: ZoneId = ZoneId.of("America/Edmonton") // TODO zone in user setting
+    private val PATTERN_FORMAT = "dd.MM.yyyy HH:mm:ss a z"
+    private val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern(PATTERN_FORMAT).withZone(zone)
+
+    /**
+     * Форматирование даты регистрации пользователя
+     * @param instant время регистрации
+     * @return String отформатированного время регистрации
+     */
+    fun obtainDateTime(instant: Instant) = formatter.format(instant)
+
     /**
      * Формирование имени пользователя
      * @param message сообщение
@@ -18,5 +34,7 @@ object Utils {
      * @return String имя пользователя
      */
     fun getUserName(user: User) = user.userName ?: "${user.lastName} ${user.firstName}"
+
+    fun getUserName(user: UserEntity) = user.userName ?: "${user.lastName} ${user.firstName}"
 
 }

@@ -51,17 +51,43 @@ class UserService(
         update(chatId, "accept", accept)
     }
 
+    fun updateUserName(chatId: Long, userName: String) {
+        update(chatId, "userName", userName)
+    }
+
+    fun updateFirstName(chatId: Long, firstName: String) {
+        update(chatId, "firstName", firstName)
+    }
+
+    fun updateLastName(chatId: Long, lastName: String) {
+        update(chatId, "lastName", lastName)
+    }
+
     fun update(chatId: Long, field: String, value: String) {
         val userEntityOptional = usersRepository.findById(chatId)
         if (userEntityOptional.isPresent) {
             val userEntity = userEntityOptional.get()
             when (field) {
+                "userName" -> userEntity.userName = value
+                "firstName" -> userEntity.firstName = value
+                "lastName" -> userEntity.lastName = value
                 "stepCode" -> userEntity.stepCode = value
                 "text" -> userEntity.text = value
                 "accept" -> userEntity.accept = value
                 else -> log.error("Invalid field: $field")
             }
-            usersRepository.save(userEntity)
+            usersRepository.saveAndFlush(userEntity)
+        } else {
+            log.error("For $chatId there is no user.")
+        }
+    }
+
+    fun delete(chatId: Long) {
+        val userEntityOptional = usersRepository.findById(chatId)
+        if (userEntityOptional.isPresent) {
+            log.info("Delete user with id $chatId.")
+            // val userEntity = userEntityOptional.get()
+            // usersRepository.delete(userEntity)
         } else {
             log.error("For $chatId there is no user.")
         }
