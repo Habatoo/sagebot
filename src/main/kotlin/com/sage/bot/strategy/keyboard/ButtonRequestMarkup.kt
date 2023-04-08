@@ -6,6 +6,7 @@ import com.sage.bot.dto.markup.ButtonRequestDto
 import com.sage.bot.dto.markup.DataModel
 import com.sage.bot.enums.StepCode
 import com.sage.bot.service.UserService
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 
 @Component
@@ -14,8 +15,11 @@ class ButtonRequestMarkup<T : DataModel>(
     private val messageWriter: MessageWriter,
 ) : InlineKeyboardMarkup<ButtonRequestDto> {
 
+    private val log = LoggerFactory.getLogger(ButtonRequestMarkup::class.java)
+
     override fun isAvailableForCurrentStep(chatId: Long): Boolean {
         return userService.getUser(chatId).get().stepCode == StepCode.BUTTON_REQUEST.toString()
+                || userService.getUser(chatId).get().stepCode == StepCode.CLEAN_MY_INFO_BUTTON_REQUEST.toString()
     }
 
     override fun message(chatId: Long, data: ButtonRequestDto?): String {
@@ -23,6 +27,10 @@ class ButtonRequestMarkup<T : DataModel>(
             throw IllegalStateException("Not Yet Supported")
         }
 
+        val stepCode = userService.getUser(chatId).get().stepCode
+        if (stepCode == StepCode.CLEAN_MY_INFO_BUTTON_REQUEST.name) {
+            return messageWriter.process(StepCode.CLEAN_MY_INFO_BUTTON_REQUEST)
+        }
         return messageWriter.process(StepCode.BUTTON_REQUEST)
     }
 

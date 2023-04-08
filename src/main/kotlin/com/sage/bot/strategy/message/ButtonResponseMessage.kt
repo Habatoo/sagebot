@@ -17,7 +17,6 @@ class ButtonResponseMessage(
 
     override fun isAvailableForCurrentStep(chatId: Long): Boolean {
         return userService.getUser(chatId).get().stepCode == StepCode.BUTTON_RESPONSE.toString()
-                || userService.getUser(chatId).get().stepCode == StepCode.CLEAN_MY_INFO.toString()
     }
 
     override fun getMessage(chatId: Long): String {

@@ -8,6 +8,7 @@ import com.sage.bot.service.MessageService
 import com.sage.bot.service.UserService
 import com.sage.bot.strategy.LogicContext
 import com.sage.bot.strategy.NextStepContext
+import org.slf4j.LoggerFactory
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Lazy
 import org.springframework.context.event.EventListener
@@ -20,6 +21,8 @@ class ApplicationListener(
     private val userService: UserService,
     private val messageService: MessageService
 ) {
+
+    private val log = LoggerFactory.getLogger(ApplicationListener::class.java)
 
     inner class Message {
         @EventListener

@@ -10,6 +10,7 @@ import com.sage.bot.event.TelegramStepMessageEvent
 import com.sage.bot.strategy.MarkupContext
 import com.sage.bot.strategy.MessageContext
 import com.sage.bot.strategy.NextStepContext
+import org.slf4j.LoggerFactory
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod
@@ -29,6 +30,8 @@ class MessageService(
     private val nextStepContext: NextStepContext
 ) {
 
+    private val log = LoggerFactory.getLogger(MessageService::class.java)
+
     fun sendMessageToBot(
         chatId: Long,
         stepCode: StepCode
@@ -47,7 +50,6 @@ class MessageService(
             )
         }
     }
-
 
     private fun simpleTextMessage(chatId: Long): SendMessage {
         val sendMessage = SendMessage()
