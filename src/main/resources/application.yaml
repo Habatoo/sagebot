@@ -1,6 +1,24 @@
+server:
+  port : 5000
+
+spring:
+  jpa:
+    hibernate:
+    ddl-auto: none
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_NAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  flyway:
+    enabled: true
+    encoding: UTF-8
+#    sql-migration-prefix: prod
+    locations: classpath:db/migration
+    validate-on-migrate: true
+#    placeholders:
+#      prod: true
+
 telegram:
-  api-url: https://api.telegram.org/
-  webhook-path: https://talksagebot.herokuapp.com/
   bot-name: ${BOT_NAME}
   bot-token: ${BOT_TOKEN}
-

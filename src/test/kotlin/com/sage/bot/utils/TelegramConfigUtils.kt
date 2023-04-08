@@ -1,14 +1,14 @@
 package com.sage.bot.utils
 
-import com.sage.bot.config.TelegramConfig
+import com.sage.bot.properties.BotProperty
 import io.mockk.every
 
 object TelegramConfigUtils {
 
-    fun prepareTelegramConfig(telegramConfig: TelegramConfig) {
-        every { telegramConfig.botName } returns "botName"
-        every { telegramConfig.botToken } returns "botToken"
-        every { telegramConfig.webhookPath } returns "webhookPath"
+    fun prepareTelegramConfig(botProperty: BotProperty) {
+        every { botProperty.botName } returns "botName"
+        every { botProperty.botToken } returns "botToken"
+        every { botProperty.webhookPath } returns "webhookPath"
     }
 
 }
