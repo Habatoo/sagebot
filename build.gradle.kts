@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import com.google.protobuf.gradle.*
 
 val postgresVersion = "42.6.0"
 val telegramBotVersion = "6.5.0"
@@ -8,6 +9,7 @@ plugins {
 	id("io.spring.dependency-management") version "1.0.15.RELEASE"
 	kotlin("jvm") version "1.6.21"
 	kotlin("plugin.spring") version "1.6.21"
+    id("com.google.protobuf") version "0.9.2"
 }
 
 group = "com.sage"
@@ -46,6 +48,9 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
+	implementation("io.grpc:grpc-all:1.54.0")
+	implementation("com.google.protobuf:protobuf-java:3.22.2")
+
 	compileOnly("org.springframework.boot:spring-boot-configuration-processor")
 	annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 
@@ -63,4 +68,33 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
 	useJUnitPlatform()
+}
+
+sourceSets {
+	main {
+		java {
+			srcDirs("build/generated/source/proto/main/grpc")
+			srcDirs("build/generated/source/proto/main/java")
+		}
+	}
+}
+
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:3.19.4"
+    }
+
+    plugins {
+        id("grpc") {
+            artifact = "io.grpc:protoc-gen-grpc-java:1.15.1"
+        }
+    }
+
+    generateProtoTasks {
+        ofSourceSet("main").forEach {
+            it.plugins {
+                id("grpc") { }
+            }
+        }
+    }
 }

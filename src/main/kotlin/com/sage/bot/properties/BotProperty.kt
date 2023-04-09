@@ -7,4 +7,7 @@ class BotProperty {
     lateinit var webhookPath: String
     lateinit var botName: String
     lateinit var botToken: String
+
+    lateinit var chatPort: Integer
+    lateinit var chatHost: String
 }

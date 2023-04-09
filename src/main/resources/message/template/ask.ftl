@@ -1,1 +1,1 @@
-chatId: ${data.chatId}
+Ответ: ${data.text}

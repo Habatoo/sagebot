@@ -31,7 +31,7 @@ class UserService(
             accept = null,
         )
         usersRepository.saveAndFlush(userEntity)
-        log.info("save user ${usersRepository.findById(chatId)}")
+        log.info("Создан пользователь ${user.userName}")
         return userEntity
     }
 

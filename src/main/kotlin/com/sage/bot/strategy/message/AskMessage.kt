@@ -3,6 +3,7 @@ package com.sage.bot.strategy.message
 import com.sage.bot.component.MessageWriter
 import com.sage.bot.dto.AskDto
 import com.sage.bot.enums.StepCode
+import com.sage.bot.service.ModelService
 import com.sage.bot.service.UserService
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Component
 @Component
 class AskMessage(
     private val userService: UserService,
+    private val modelService: ModelService,
     private val messageWriter: MessageWriter,
 ) : Message {
 
@@ -19,6 +21,7 @@ class AskMessage(
     }
 
     override fun getMessage(chatId: Long): String {
+        modelService.takeAnswer(chatId)
         val user = userService.getUser(chatId)
 
         if (user.isEmpty) {

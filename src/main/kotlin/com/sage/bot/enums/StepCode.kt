@@ -7,7 +7,7 @@ enum class StepCode(val type: StepType, val botPause: Boolean) {
     CLEAN_MY_INFO_BUTTON_REQUEST(StepType.INLINE_KEYBOARD_MARKUP, true),
     CLEAN_MY_INFO_BUTTON_RESPONSE(StepType.SIMPLE_TEXT, true),
     ASK(StepType.SIMPLE_TEXT, true),
-    HELP(StepType.SIMPLE_TEXT, true),
+    HELP(StepType.SIMPLE_TEXT, true), // todo false
     BUTTON_REQUEST(StepType.INLINE_KEYBOARD_MARKUP, true),
     BUTTON_RESPONSE(StepType.SIMPLE_TEXT, true),
 }

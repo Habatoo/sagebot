@@ -22,3 +22,5 @@ spring:
 telegram:
   bot-name: ${BOT_NAME}
   bot-token: ${BOT_TOKEN}
+  chat-port: 6040
+  chat-host: localhost
