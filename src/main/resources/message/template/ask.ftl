@@ -1,1 +1,1 @@
-Ответ: ${data.text}
+${data.text}
