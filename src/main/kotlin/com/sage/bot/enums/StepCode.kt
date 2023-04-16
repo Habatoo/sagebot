@@ -2,6 +2,8 @@ package com.sage.bot.enums
 
 enum class StepCode(val type: StepType, val botPause: Boolean) {
     START(StepType.SIMPLE_TEXT, false),
+    REGISTER_BUTTON_REQUEST(StepType.INLINE_KEYBOARD_MARKUP, true),
+    REGISTER_BUTTON_RESPONSE(StepType.SIMPLE_TEXT, true),
     USER_INFO(StepType.SIMPLE_TEXT, true),
     CLEAN_MY_INFO(StepType.SIMPLE_TEXT, true),
     CLEAN_MY_INFO_BUTTON_REQUEST(StepType.INLINE_KEYBOARD_MARKUP, true),

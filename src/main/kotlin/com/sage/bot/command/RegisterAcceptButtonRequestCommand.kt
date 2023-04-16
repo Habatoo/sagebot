@@ -13,33 +13,24 @@ import org.telegram.telegrambots.meta.api.objects.User
 import org.telegram.telegrambots.meta.bots.AbsSender
 
 @Component
-class StartCommand(
+class RegisterAcceptButtonRequestCommand(
     private val userService: UserService,
     private val applicationEventPublisher: ApplicationEventPublisher
-) : BotCommand(CommandCode.START.command, CommandCode.START.desc) {
+) : BotCommand(CommandCode.BUTTON.command, CommandCode.BUTTON.desc) {
 
-    private val log = LoggerFactory.getLogger(StartCommand::class.java)
+    private val log = LoggerFactory.getLogger(RegisterAcceptButtonRequestCommand::class.java)
 
     companion object {
-        private val START_CODE = StepCode.START
+        private val REGISTER_BUTTON_REQUEST = StepCode.REGISTER_BUTTON_REQUEST
     }
 
     override fun execute(absSender: AbsSender, user: User, chat: Chat, arguments: Array<out String>) {
         val chatId = chat.id
 
-        if (userService.isUserExist(chatId)) {
-            userService.updateUserStep(chatId, START_CODE)
-            applicationEventPublisher.publishEvent(
-                TelegramStepMessageEvent(chatId = chatId, stepCode = START_CODE)
-            )
-        } else {
-            log.info("Create new user ${user.userName}")
-            userService.createUser(chatId, user)
-            userService.updateUserStep(chatId, StepCode.START)
-            applicationEventPublisher.publishEvent(
-                TelegramStepMessageEvent(chatId = chatId, stepCode = StepCode.REGISTER_BUTTON_REQUEST)
-            )
-        }
+        userService.updateUserStep(chatId, REGISTER_BUTTON_REQUEST)
+        applicationEventPublisher.publishEvent(
+            TelegramStepMessageEvent(chatId = chatId, stepCode = REGISTER_BUTTON_REQUEST)
+        )
     }
 
 }

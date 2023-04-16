@@ -20,6 +20,7 @@ class ButtonRequestMarkup<T : DataModel>(
     override fun isAvailableForCurrentStep(chatId: Long): Boolean {
         return userService.getUser(chatId).get().stepCode == StepCode.BUTTON_REQUEST.toString()
                 || userService.getUser(chatId).get().stepCode == StepCode.CLEAN_MY_INFO_BUTTON_REQUEST.toString()
+                || userService.getUser(chatId).get().stepCode == StepCode.REGISTER_BUTTON_REQUEST.toString()
     }
 
     override fun message(chatId: Long, data: ButtonRequestDto?): String {
@@ -28,9 +29,15 @@ class ButtonRequestMarkup<T : DataModel>(
         }
 
         val stepCode = userService.getUser(chatId).get().stepCode
+
         if (stepCode == StepCode.CLEAN_MY_INFO_BUTTON_REQUEST.name) {
             return messageWriter.process(StepCode.CLEAN_MY_INFO_BUTTON_REQUEST)
         }
+
+        if (stepCode == StepCode.REGISTER_BUTTON_REQUEST.name) {
+            return messageWriter.process(StepCode.REGISTER_BUTTON_REQUEST)
+        }
+
         return messageWriter.process(StepCode.BUTTON_REQUEST)
     }
 
