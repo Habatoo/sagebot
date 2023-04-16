@@ -32,7 +32,7 @@ class ClearMyInfoButtonResponseMessage(
 
         val userName = Utils.getUserName(user.get())
         val accept = user.get().accept
-        val text = checkYesOrNo(accept!!,"Пользователь $userName", chatId)
+        val text = checkDeleteYesOrNo(accept!!,"Пользователь $userName", chatId)
 
         return messageWriter.process(
             StepCode.CLEAN_MY_INFO_BUTTON_RESPONSE,
@@ -40,7 +40,7 @@ class ClearMyInfoButtonResponseMessage(
         )
     }
 
-    private fun checkYesOrNo(callbackQueryAnswer: String, text: String, chatId: Long): String {
+    private fun checkDeleteYesOrNo(callbackQueryAnswer: String, text: String, chatId: Long): String {
         return if ("YES" == callbackQueryAnswer) {
             userService.delete(chatId)
             "$text из чата $chatId удалил свои пользовательские данные"
